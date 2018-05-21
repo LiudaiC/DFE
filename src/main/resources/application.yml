@@ -1,0 +1,13 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/df
+    username: dF
+    password: dF*123456
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  config-location: classpath:mybatis-config.xml
+resource:
+  location: c:/Users/Stefan/Pictures/Saved Pictures
+  tmpLocation: c:/Users/Stefan/Pictures
