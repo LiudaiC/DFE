@@ -1,8 +1,8 @@
 server:
-  port: 8081
+  port: 8082
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/df
+    url: jdbc:mysql://localhost:3306/df?characterEncoding=utf8&useSSL=false&autoReconnect=false&rewriteBatchedStatements=true
     username: dF
     password: dF*123456
     driver-class-name: com.mysql.jdbc.Driver

@@ -12,5 +12,7 @@ public class GoodsPrice {
 
     private String valIds;
 
+    private String vals;
+
     private BigDecimal price;
 }

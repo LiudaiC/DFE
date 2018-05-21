@@ -20,4 +20,8 @@ public interface ProductAttributeValueDao {
 
     @Select("select * from df_product_attr_val where att_id=${attId}")
     List<ProductAttributeValue> getByAttId(@Param("attId") long attId);
+
+    @Select("select value from df_product_attr_val where id in (${valIds})")
+    List<String> getVals(@Param("valIds") String valIds);
+
 }

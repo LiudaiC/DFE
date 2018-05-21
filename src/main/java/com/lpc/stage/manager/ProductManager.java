@@ -2,10 +2,7 @@ package com.lpc.stage.manager;
 
 import com.lpc.stage.dto.request.ProductPriceDto;
 import com.lpc.stage.dto.request.ProductRequestDto;
-import com.lpc.stage.dto.response.Goods;
-import com.lpc.stage.dto.response.GoodsAttr;
-import com.lpc.stage.dto.response.GoodsAttrVal;
-import com.lpc.stage.dto.response.GoodsPrice;
+import com.lpc.stage.dto.response.*;
 import com.lpc.stage.model.InitProduct;
 import com.lpc.stage.model.ProductAttribute;
 import com.lpc.stage.model.ProductAttributeValue;
@@ -79,8 +76,30 @@ public class ProductManager {
         this.productPriceService.savePriceList(prices);
     }
 
-    public List<InitProduct> getInitProducts() {
-        return this.productService.getInitProducts();
+    public List<StageProductDto> getInitProducts(int page) {
+        List<InitProduct> inits = this.productService.getInitProducts(page);
+        List<StageProductDto> products = new ArrayList<StageProductDto>();
+        StageProductDto productDto = null;
+        GoodsPrice goodsPrice = null;
+        for (InitProduct p: inits) {
+            productDto = new StageProductDto();
+            productDto.setId(p.getId());
+            productDto.setProductName(p.getProductName());
+            productDto.setRemark(p.getRemark());
+            productDto.setImageUrl(p.getImageUrl());
+            List<GoodsPrice> prices = new ArrayList<GoodsPrice>();
+            List<ProductPrice> initPrices = this.productPriceService.getPrices(p.getId());
+            for (ProductPrice price: initPrices) {
+                List<String> vals = this.valueService.getVals(price.getValIds());
+                goodsPrice = new GoodsPrice();
+                goodsPrice.setVals(StringUtils.join(vals));
+                goodsPrice.setPrice(price.getSalePrice());
+                prices.add(goodsPrice);
+            }
+            productDto.setPriceList(prices);
+            products.add(productDto);
+        }
+        return products;
     }
 
     public InitProduct updateProduct(String id, ProductRequestDto dto) {
@@ -88,19 +107,20 @@ public class ProductManager {
         product.setProductName(dto.getProductName());
         product.setImageUrl(dto.getImageUrl());
         product.setDescription(dto.getDescription());
+        product.setRemark(dto.getRemark());
         product.setUpdatedTime(new Timestamp(System.currentTimeMillis()));
         this.productService.update(product);
         return product;
     }
 
-    public List<Goods> getGoods() {
+    public List<Goods> getGoods(int page) {
         List<Goods> goods = new ArrayList<Goods>();
-        List<InitProduct> products = this.productService.getInitProducts();
+        List<InitProduct> products = this.productService.getInitProducts(page);
         Goods goods1 = null;
         for (InitProduct p : products) {
             goods1 = new Goods();
             goods1.setGoodName(p.getProductName());
-            goods1.setDescription(p.getDescription());
+            goods1.setRemark(p.getRemark());
             goods1.setId(p.getId());
             List<GoodsPrice> goodsPrices = new ArrayList<GoodsPrice>();
             GoodsPrice goodsPrice = null;

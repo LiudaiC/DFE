@@ -27,16 +27,17 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<OrderResponseDto> getOrders(@PathVariable("openId") String openId,
-                                            @PathVariable("startDate") String startDate,
-                                            @PathVariable("endDate") String endDate) {
+    public List<OrderResponseDto> getOrders(@RequestParam("openId") String openId,
+                                            @RequestParam(name = "page", defaultValue = "1") int page,
+                                            @RequestParam("startDate") String startDate,
+                                            @RequestParam("endDate") String endDate) {
         return this.orderManager.getOrders(openId, startDate, endDate);
     }
 
     @GetMapping("/all")
-    public List<OrderResponseDto> getAllOrders(@PathVariable(value = "query", required = false) String query,
-                                            @PathVariable(value = "startDate", required = false) String startDate,
-                                            @PathVariable(value = "endDate", required = false) String endDate) {
+    public List<OrderResponseDto> getAllOrders(@RequestParam(name = "query", required = false) String query,
+                                            @RequestParam(name = "startDate", required = false) String startDate,
+                                            @RequestParam(name = "endDate", required = false) String endDate) {
         return this.orderManager.getAllOrders(query, startDate, endDate);
     }
 

@@ -23,4 +23,8 @@ public class ProductAttributeValueService {
     public List<ProductAttributeValue> getByAttrId(long attrId) {
         return this.valueDao.getByAttId(attrId);
     }
+
+    public List<String> getVals(String valIds) {
+        return this.valueDao.getVals(valIds);
+    }
 }

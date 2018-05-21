@@ -22,7 +22,7 @@ public class Goods {
 
     private List<GoodsPrice> prices;
 
-    private String description;
+    private String remark;
 
 
 }

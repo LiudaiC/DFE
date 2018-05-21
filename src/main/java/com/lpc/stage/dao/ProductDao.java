@@ -23,6 +23,6 @@ public interface ProductDao {
     @Select("select * from df_product where id=${id}")
     InitProduct getById(String id);
 
-    @Select("select * from df_product")
-    List<InitProduct> getInitProducts();
+    @Select("select * from df_product limit ${page-1}, ${pageSize} order by updated_time desc")
+    List<InitProduct> getInitProducts(@Param("page") int page, @Param("pageSize") int pageSize);
 }

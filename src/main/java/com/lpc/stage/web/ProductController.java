@@ -1,9 +1,9 @@
 package com.lpc.stage.web;
 
-import com.lpc.stage.dto.response.Goods;
 import com.lpc.stage.dto.request.ProductRequestDto;
+import com.lpc.stage.dto.response.Goods;
+import com.lpc.stage.dto.response.StageProductDto;
 import com.lpc.stage.manager.ProductManager;
-import com.lpc.stage.model.InitProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +29,13 @@ public class ProductController {
     }
 
     @GetMapping("/inits")
-    public List<InitProduct> getProducts() {
-        return this.productManager.getInitProducts();
+    public List<StageProductDto> getProducts(@RequestParam(name = "page", defaultValue = "1") int page) {
+        return this.productManager.getInitProducts(page);
     }
 
     @GetMapping("/goods")
-    public List<Goods> getGoods() {
-        return this.productManager.getGoods();
+    public List<Goods> getGoods(@RequestParam(name = "page", defaultValue = "1") int page) {
+        return this.productManager.getGoods(page);
     }
 
     @PutMapping("/{id}")
